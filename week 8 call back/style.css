@@ -1,0 +1,110 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #dadadb;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  /* Header */
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Buttons */
+  .buttons {
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 5px;
+    color: rgb(119, 72, 72);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .btn-blue {
+    background: linear-gradient(45deg, #007bff, #00bfff);
+  }
+  
+  .btn-green {
+    background: linear-gradient(45deg, #28a745, #42d392);
+  }
+  
+  .btn-purple {
+    background: linear-gradient(45deg, #6f42c1, #9f42c1);
+  }
+  
+  /* Hover Effect */
+  .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Output Section */
+  .output {
+    text-align: left;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .output h2 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .output p {
+    margin: 5px 0;
+    font-size: 1rem;
+  }
+  
+  .output ul {
+    list-style-type: square;
+    padding-left: 20px;
+  }
+  
+  .output li {
+    margin: 5px 0;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+      padding: 10px;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    .btn {
+      font-size: 0.9rem;
+      padding: 10px 15px;
+    }
+  
+    #userId {
+      width: 80px;
+    }
+  }
