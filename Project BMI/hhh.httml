@@ -1,0 +1,124 @@
+<html>
+<head>
+    <title>Kalkulator BMI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl border border-gray-300">
+        <div class="flex justify-center mb-6">
+            <img alt="Logo of a stylized scale representing BMI calculation" class="w-24 h-24" src="https://4.bp.blogspot.com/-H6nTw7ovjzY/W-JOILzX5nI/AAAAAAAAASY/sYQ8Oyw_uPYGQzDB7NOW9m23WEeEyIQ_wCK4BGAYYCw/s1600/HD.png"/>
+        </div>
+        <h1 class="text-3xl font-bold mb-6 text-center">Kalkulator BMI</h1>
+        <div class="mb-4">
+            <input class="w-full p-4 border border-gray-300 rounded-lg" id="weight" placeholder="Berat Badan (kg)" type="number"/>
+        </div>
+        <div class="mb-4">
+            <input class="w-full p-4 border border-gray-300 rounded-lg" id="height" placeholder="Tinggi Badan (cm)" type="number"/>
+        </div>
+        <div class="flex space-x-4">
+            <button class="w-full bg-blue-500 text-white p-4 rounded-lg hover:bg-blue-600" onclick="calculateBMI()">Hitung BMI</button>
+            <button class="w-full bg-red-500 text-white p-4 rounded-lg hover:bg-red-600" onclick="resetFields()">Hapus</button>
+        </div>
+        <div class="result mt-6 text-xl" id="result"></div>
+        <div class="solution mt-2 text-lg" id="solution"></div>
+        <div class="mt-6">
+            <h2 class="text-2xl font-bold mb-4">Indikator BMI</h2>
+            <div class="flex justify-between mt-2 text-xs text-gray-500 mb-10">
+                <div class="relative" style="margin-left: 18.5%;">
+                    <div class="absolute left-0 transform -translate-x-1/2 border border-gray-400 p-1 rounded -mt-2">18.5</div>
+                </div>
+                <div class="relative" style="margin-left: 24.9%;">
+                    <div class="absolute left-0 transform -translate-x-1/2 border border-gray-400 p-1 rounded -mt-2">24.9</div>
+                </div>
+                <div class="relative" style="margin-left: 29.9%;">
+                    <div class="absolute left-0 transform -translate-x-1/2 border border-gray-400 p-1 rounded -mt-2">29.9</div>
+                </div>
+                <div class="relative" style="margin-left: 26.7%;">
+                    <div class="absolute right-0 transform translate-x-1/2 border border-gray-400 p-1 rounded -mt-2" id="max-bmi">50</div>
+                </div>
+            </div>
+            <div class="relative h-8 w-full bg-gray-200 rounded-lg overflow-hidden mt-4">
+                <div class="absolute h-full bg-blue-200" style="width: 18.5%;"></div>
+                <div class="absolute h-full bg-green-200" style="left: 18.5%; width: 24.9%;"></div>
+                <div class="absolute h-full bg-yellow-200" style="left: 43.4%; width: 29.9%;"></div>
+                <div class="absolute h-full bg-red-200" style="left: 73.3%; width: 26.7%;"></div>
+                <div class="absolute h-full bg-black opacity-50" id="bmi-indicator" style="width: 2px;"></div>
+                <div class="absolute h-full border-r border-gray-400" style="left: 18.5%;"></div>
+                <div class="absolute h-full border-r border-gray-400" style="left: 43.4%;"></div>
+                <div class="absolute h-full border-r border-gray-400" style="left: 73.3%;"></div>
+            </div>
+            <div class="flex justify-between mt-2 text-sm">
+                <div>Kurang Berat Badan</div>
+                <div>Berat Badan Normal</div>
+                <div>Kelebihan Berat Badan</div>
+                <div>Obesitas</div>
+            </div>
+        </div>
+    </div>
+    <footer class="mt-8 text-center text-gray-600">
+        © 2024 By SMKHidayah. All rights reserved.
+    </footer>
+    <script>
+        function calculateBMI() {
+            const weight = document.getElementById('weight').value;
+            const height = document.getElementById('height').value / 100; // convert cm to meters
+            const bmi = (weight / (height * height)).toFixed(2);
+
+            let resultText = `BMI Anda adalah ${bmi}`;
+            let solutionText = '';
+
+            if (bmi < 18.5) {
+                solutionText = 'Anda kekurangan berat badan. Pertimbangkan untuk makan makanan yang seimbang dan berkonsultasi dengan penyedia layanan kesehatan.';
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                solutionText = 'Berat badan Anda normal. Pertahankan kerja bagus ini!';
+            } else if (bmi >= 25 && bmi < 29.9) {
+                solutionText = 'Anda kelebihan berat badan. Pertimbangkan diet sehat dan olahraga teratur.';
+            } else {
+                solutionText = 'Anda mengalami obesitas. Disarankan untuk berkonsultasi dengan penyedia layanan kesehatan untuk panduan.';
+            }
+
+            document.getElementById('result').innerText = resultText;
+            document.getElementById('solution').innerText = solutionText;
+
+            // Remove previous indicator
+            const previousIndicator = document.getElementById('bmi-indicator-detail');
+            if (previousIndicator) {
+                previousIndicator.remove();
+            }
+
+            // Update BMI indicator position
+            const indicator = document.getElementById('bmi-indicator');
+            const maxBMI = parseFloat(document.getElementById('max-bmi').innerText);
+            const indicatorPosition = (bmi / maxBMI) * 100; // Scale based on max BMI
+            indicator.style.left = `${indicatorPosition}%`;
+
+            // Add detailed indicator
+            const indicatorDetail = document.createElement('div');
+            indicatorDetail.id = 'bmi-indicator-detail';
+            indicatorDetail.className = 'absolute h-full bg-black opacity-50';
+            indicatorDetail.style.width = '2px';
+            indicatorDetail.style.left = `${indicatorPosition}%`;
+            indicatorDetail.style.top = '0';
+            indicatorDetail.style.height = '100%';
+            indicatorDetail.style.transform = 'translateX(-50%)';
+            indicatorDetail.innerHTML = `<div class="absolute bg-black text-white text-xs p-1 rounded" style="top: -20px; left: 50%; transform: translateX(-50%);">${bmi}</div>`;
+            document.querySelector('.relative').appendChild(indicatorDetail);
+        }
+
+        function resetFields() {
+            document.getElementById('weight').value = '';
+            document.getElementById('height').value = '';
+            document.getElementById('result').innerText = '';
+            document.getElementById('solution').innerText = '';
+            const previousIndicator = document.getElementById('bmi-indicator-detail');
+            if (previousIndicator) {
+                previousIndicator.remove();
+            }
+            const indicator = document.getElementById('bmi-indicator');
+            indicator.style.left = '0%';
+        }
+    </script>
+</body>
+</html>
